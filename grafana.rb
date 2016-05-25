@@ -3,9 +3,9 @@ require "language/go"
 class Grafana < Formula
   desc "Gorgeous metric viz, dashboards & editors for Graphite, InfluxDB & OpenTSDB."
   homepage "https://grafana.org"
-  url "https://github.com/grafana/grafana/archive/v3.0.3.tar.gz"
-  version "3.0.3"
-  sha256 "4ff16ea6282439d09f8dc2b501de66108cfdfbbe0c0af04cfbf4444191111297"
+  url "https://github.com/grafana/grafana/archive/v3.0.4.tar.gz"
+  version "3.0.4"
+  sha256 "f26a374326e64a8f83c57fdf916ba1c8524dd55002dfe628b4854d05fed3715a"
 
   head "https://github.com/grafana/grafana.git"
 
