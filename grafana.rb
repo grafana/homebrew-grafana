@@ -13,7 +13,7 @@ class Grafana < Formula
   depends_on "nodejs" => :build
 
   bottle do
-    root_url "https://s3-us-west-2.amazonaws.com/grafana-bottles/"
+    root_url "https://s3-us-west-2.amazonaws.com/grafana-bottles"
     cellar :any_skip_relocation
     sha256 "877c36bb77f009d373f0868a8bbd0ee9db0bb0f1b06d01a835f81e8fe7edb6ac" => :mavericks
   end
