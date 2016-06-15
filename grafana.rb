@@ -12,6 +12,12 @@ class Grafana < Formula
   depends_on "go" => :build
   depends_on "nodejs" => :build
 
+  bottle do
+    root_url "https://s3-us-west-2.amazonaws.com/grafana-bottles/"
+    cellar :any_skip_relocation
+    sha256 "877c36bb77f009d373f0868a8bbd0ee9db0bb0f1b06d01a835f81e8fe7edb6ac" => :mavericks
+  end
+
   def install
     ENV.prepend_path "PATH", "#{Formula["node"].opt_libexec}/npm/bin"
     ENV["GOPATH"] = buildpath
