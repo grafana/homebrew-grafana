@@ -23,6 +23,7 @@ class Grafana < Formula
     
     cd grafana_path do
       # Might do it differently for head vs. release
+      system %q(sed -i.bak 's/"sass-lint": "^1.6.0",/"sass-lint": "1.7.0",/;' package.json)
       system "go", "run", "build.go", "setup"
       system "go", "run", "build.go", "build"
       system "npm", "install"
