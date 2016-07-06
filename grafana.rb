@@ -1,16 +1,17 @@
 require "language/go"
+require "language/node"
+require "open3"
 
 class Grafana < Formula
-  desc "Gorgeous metric viz, dashboards & editors for Graphite, InfluxDB & OpenTSDB."
-  homepage "https://grafana.org"
+  desc "Gorgeous metric visualizations and dashboards for timeseries databases."
+  homepage "http://grafana.org"
   url "https://github.com/grafana/grafana/archive/v3.0.4.tar.gz"
-  version "3.0.4"
   sha256 "f26a374326e64a8f83c57fdf916ba1c8524dd55002dfe628b4854d05fed3715a"
 
   head "https://github.com/grafana/grafana.git"
 
   depends_on "go" => :build
-  depends_on "nodejs" => :build
+  depends_on "node" => :build
 
   def install
     ENV.prepend_path "PATH", "#{Formula["node"].opt_libexec}/npm/bin"
@@ -20,18 +21,18 @@ class Grafana < Formula
     grafana_path.install ".jscs.json", ".jsfmtrc", ".jshintrc", ".bowerrc"
 
     Language::Go.stage_deps resources, buildpath/"src"
-    
+
     cd grafana_path do
       # Might do it differently for head vs. release
       system %q(sed -i.bak 's/"sass-lint": "^1.6.0",/"sass-lint": "1.7.0",/;' package.json)
       system "go", "run", "build.go", "setup"
       system "go", "run", "build.go", "build"
-      system "npm", "install"
-      system "npm", "install", "grunt-cli"
+      system "npm", "install", *Language::Node.local_npm_install_args
+      system "npm", "install", "grunt-cli", *Language::Node.local_npm_install_args
       system "node_modules/grunt-cli/bin/grunt", "build"
     end
 
-    FileUtils.cp(grafana_path/"conf/sample.ini", grafana_path/"conf/grafana.ini")
+    cp(grafana_path/"conf/sample.ini", grafana_path/"conf/grafana.ini")
 
     bin.install grafana_path/"bin/grafana-cli"
     bin.install grafana_path/"bin/grafana-server"
@@ -63,11 +64,11 @@ class Grafana < Formula
           <string>#{opt_bin}/grafana-server</string>
           <string>--config</string>
           <string>#{HOMEBREW_PREFIX}/etc/grafana/grafana.ini</string>
-	  <string>--homepath</string>
-	  <string>#{HOMEBREW_PREFIX}/share/grafana</string>
-	  <string>cfg:default.paths.logs=#{var}/log/grafana</string>
-	  <string>cfg:default.paths.data=#{var}/lib/grafana</string>
-	  <string>cfg:default.paths.plugins=#{var}/lib/grafana/plugins</string>
+          <string>--homepath</string>
+          <string>#{HOMEBREW_PREFIX}/share/grafana</string>
+          <string>cfg:default.paths.logs=#{var}/log/grafana</string>
+          <string>cfg:default.paths.data=#{var}/lib/grafana</string>
+          <string>cfg:default.paths.plugins=#{var}/lib/grafana/plugins</string>
         </array>
         <key>RunAtLoad</key>
         <true/>
@@ -89,5 +90,22 @@ class Grafana < Formula
 
   test do
     system bin/"grafana-server", "-v"
+    Dir.mktmpdir do |tdir|
+      Dir.chdir(pkgshare)
+      logdir = File.join(tdir, "log")
+      datadir = File.join(tdir, "data")
+      plugdir = File.join(tdir, "plugins")
+      [logdir, datadir, plugdir].each do |d|
+        Dir.mkdir(d)
+      end
+      r, w = IO.pipe
+      pid = spawn(bin/"grafana-server", "cfg:default.paths.logs=#{logdir}", "cfg:default.paths.data=#{datadir}", "cfg:default.paths.plugins=#{plugdir}", :err => w)
+      sleep 3 # Let it have a chance to actually start up
+      Process.kill("TERM", pid)
+      w.close
+      lines = r.readlines
+      m = lines.find { |l| l =~ /Listen/ }
+      m ? true : false
+    end
   end
 end
