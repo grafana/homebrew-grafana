@@ -18,25 +18,25 @@ class Grafana < Formula
     grafana_path.install ".jscs.json", ".jsfmtrc", ".jshintrc", ".bowerrc"
 
     cd grafana_path do
+      # The sass-lint npm package dependencey in package.json specifies any
+      # version greater than 1.6.0 for grafana, but on OS X versions 1.8.0+
+      # break. This replaces the specification for any version >= 1.6.0 and
+      # sets it to 1.7.0 (which works).
       inreplace "package.json", '"sass-lint": "^1.6.0"', '"sass-lint": "1.7.0"'
       system "go", "run", "build.go", "setup"
       system "go", "run", "build.go", "build"
       system "npm", "install", *Language::Node.local_npm_install_args
       system "npm", "install", "grunt-cli", *Language::Node.local_npm_install_args
       system "node_modules/grunt-cli/bin/grunt", "build"
+
+      bin.install "bin/grafana-cli"
+      bin.install "bin/grafana-server"
+      (bin/"grafana").write(env_script)
+      chmod 0755, bin/"grafana"
+      etc.install "conf/sample.ini" => "grafana/grafana.ini"
+      pkgshare.install Dir["conf", "vendor"]
+      pkgshare.install "public_gen" => "public"
     end
-
-    cp(grafana_path/"conf/sample.ini", grafana_path/"conf/grafana.ini")
-
-    bin.install grafana_path/"bin/grafana-cli"
-    bin.install grafana_path/"bin/grafana-server"
-    (grafana_path/"grafana").write(env_script)
-    chmod 0755, grafana_path/"grafana"
-    bin.install grafana_path/"grafana"
-    (etc/"grafana").mkpath
-    etc.install grafana_path/"conf/grafana.ini" => "grafana/grafana.ini"
-    pkgshare.install Dir[grafana_path/"conf", grafana_path/"public_gen", grafana_path/"vendor"]
-    mv pkgshare/"public_gen", pkgshare/"public"
   end
 
   def post_install
@@ -49,11 +49,11 @@ class Grafana < Formula
       #!/usr/bin/env bash
       DAEMON=grafana-server
       EXECUTABLE=#{bin/"grafana-server"}
-      CONFIG=#{HOMEBREW_PREFIX}/etc/grafana/grafana.ini
-      HOMEPATH=#{HOMEBREW_PREFIX}/share/grafana
-      LOGPATH=#{HOMEBREW_PREFIX}/var/log/grafana
-      DATAPATH=#{HOMEBREW_PREFIX}/var/lib/grafana
-      PLUGINPATH=#{HOMEBREW_PREFIX}/var/lib/grafana/plugins
+      CONFIG=#{etc}/grafana/grafana.ini
+      HOMEPATH=#{pkgshare}
+      LOGPATH=#{var}/log/grafana
+      DATAPATH=#{var}/lib/grafana
+      PLUGINPATH=#{var}/lib/grafana/plugins
 
       case "$1" in
       start)
@@ -93,9 +93,9 @@ class Grafana < Formula
         <array>
           <string>#{opt_bin}/grafana-server</string>
           <string>--config</string>
-          <string>#{HOMEBREW_PREFIX}/etc/grafana/grafana.ini</string>
+          <string>#{etc}/grafana/grafana.ini</string>
           <string>--homepath</string>
-          <string>#{HOMEBREW_PREFIX}/share/grafana</string>
+          <string>#{opt_pkgshare}</string>
           <string>cfg:default.paths.logs=#{var}/log/grafana</string>
           <string>cfg:default.paths.data=#{var}/lib/grafana</string>
           <string>cfg:default.paths.plugins=#{var}/lib/grafana/plugins</string>
