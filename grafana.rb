@@ -3,8 +3,8 @@ require "language/node"
 class Grafana < Formula
   desc "Gorgeous metric visualizations and dashboards for timeseries databases."
   homepage "http://grafana.org"
-  url "https://github.com/grafana/grafana/archive/v3.0.4.tar.gz"
-  sha256 "f26a374326e64a8f83c57fdf916ba1c8524dd55002dfe628b4854d05fed3715a"
+  url "https://github.com/grafana/grafana/archive/v3.1.0.tar.gz"
+  sha256 "658c858e905ecb05e03aabf57ce02184b484f98e1fb979b67d26e16dfd93196a"
 
   head "https://github.com/grafana/grafana.git"
 
@@ -22,7 +22,6 @@ class Grafana < Formula
       # version greater than 1.6.0 for grafana, but on OS X versions 1.8.0+
       # break. This replaces the specification for any version >= 1.6.0 and
       # sets it to 1.7.0 (which works).
-      inreplace "package.json", '"sass-lint": "^1.6.0"', '"sass-lint": "1.7.0"'
       system "go", "run", "build.go", "setup"
       system "go", "run", "build.go", "build"
       system "npm", "install", *Language::Node.local_npm_install_args
