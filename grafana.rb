@@ -18,10 +18,6 @@ class Grafana < Formula
     grafana_path.install ".jscs.json", ".jsfmtrc", ".jshintrc", ".bowerrc"
 
     cd grafana_path do
-      # The sass-lint npm package dependencey in package.json specifies any
-      # version greater than 1.6.0 for grafana, but on OS X versions 1.8.0+
-      # break. This replaces the specification for any version >= 1.6.0 and
-      # sets it to 1.7.0 (which works).
       system "go", "run", "build.go", "setup"
       system "go", "run", "build.go", "build"
       system "npm", "install", *Language::Node.local_npm_install_args
