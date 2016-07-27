@@ -139,13 +139,13 @@ class Grafana < Formula
     w = res[1]
     pid = res[2]
 
-    listening = Timeout::timeout(5) do
+    listening = Timeout.timeout(5) do
       li = false
       r.each do |l|
-	if l =~ /Listen/
-	  li = true
-	  break
-	end
+        if l =~ /Listen/
+          li = true
+          break
+        end
       end
       li
     end
