@@ -30,11 +30,9 @@ class Grafana < Formula
       chmod 0755, bin/"grafana"
       (etc/"grafana").mkpath
       cp("conf/sample.ini", "conf/grafana.ini.example")
-      unless (etc/"grafana/grafana.ini").exist?
-        etc.install "conf/sample.ini" => "grafana/grafana.ini"
-      end
+      etc.install "conf/sample.ini" => "grafana/grafana.ini"
       etc.install "conf/grafana.ini.example" => "grafana/grafana.ini.example"
-      pkgshare.install Dir["conf", "vendor"]
+      pkgshare.install "conf", "vendor"
       pkgshare.install "public_gen" => "public"
     end
   end
@@ -120,6 +118,7 @@ class Grafana < Formula
 
   test do
     require "pty"
+    require "timeout"
 
     # first test
     system bin/"grafana-server", "-v"
@@ -135,15 +134,25 @@ class Grafana < Formula
     end
     Dir.chdir(pkgshare)
 
-    res = PTY.spawn(bin/"grafana-server", "cfg:default.paths.logs=#{logdir}", "cfg:default.paths.data=#{datadir}", "cfg:default.paths.plugins=#{plugdir}")
+    res = PTY.spawn(bin/"grafana-server", "cfg:default.paths.logs=#{logdir}", "cfg:default.paths.data=#{datadir}", "cfg:default.paths.plugins=#{plugdir}", "cfg:default.server.http_port=50100")
     r = res[0]
     w = res[1]
     pid = res[2]
-    sleep 3 # Let it have a chance to actually start up
+
+    listening = Timeout::timeout(5) do
+      li = false
+      r.each do |l|
+	if l =~ /Listen/
+	  li = true
+	  break
+	end
+      end
+      li
+    end
+
     Process.kill("TERM", pid)
     w.close
-    lines = r.readlines
-    m = lines.find { |l| l =~ /Listen/ }
-    m ? true : false
+    r.close
+    listening
   end
 end
