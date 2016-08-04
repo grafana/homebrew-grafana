@@ -3,8 +3,8 @@ require "language/node"
 class Grafana < Formula
   desc "Gorgeous metric visualizations and dashboards for timeseries databases."
   homepage "http://grafana.org"
-  url "https://github.com/grafana/grafana/archive/v3.1.0.tar.gz"
-  sha256 "658c858e905ecb05e03aabf57ce02184b484f98e1fb979b67d26e16dfd93196a"
+  url "https://github.com/grafana/grafana/archive/v3.1.1.tar.gz"
+  sha256 "77bff57f02e507fb998d6d2492798801db4cb10c82c1378e32bd1dde963dba3d"
 
   head "https://github.com/grafana/grafana.git"
 
@@ -14,8 +14,9 @@ class Grafana < Formula
   def install
     ENV["GOPATH"] = buildpath
     grafana_path = buildpath/"src/github.com/grafana/grafana"
-    grafana_path.install Dir["*"]
-    grafana_path.install ".jscs.json", ".jsfmtrc", ".jshintrc", ".bowerrc"
+    #grafana_path.install Dir["*"]
+    #grafana_path.install ".jscs.json", ".jsfmtrc", ".jshintrc", ".bowerrc"
+    grafana_path.install buildpath.children
 
     cd grafana_path do
       system "go", "run", "build.go", "setup"
@@ -27,7 +28,6 @@ class Grafana < Formula
       bin.install "bin/grafana-cli"
       bin.install "bin/grafana-server"
       (bin/"grafana").write(env_script)
-      chmod 0755, bin/"grafana"
       (etc/"grafana").mkpath
       cp("conf/sample.ini", "conf/grafana.ini.example")
       etc.install "conf/sample.ini" => "grafana/grafana.ini"
