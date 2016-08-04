@@ -14,8 +14,6 @@ class Grafana < Formula
   def install
     ENV["GOPATH"] = buildpath
     grafana_path = buildpath/"src/github.com/grafana/grafana"
-    #grafana_path.install Dir["*"]
-    #grafana_path.install ".jscs.json", ".jsfmtrc", ".jshintrc", ".bowerrc"
     grafana_path.install buildpath.children
 
     cd grafana_path do
