@@ -25,7 +25,6 @@ class Grafana < Formula
 
       bin.install "bin/grafana-cli"
       bin.install "bin/grafana-server"
-      (bin/"grafana").write(env_script)
       (etc/"grafana").mkpath
       cp("conf/sample.ini", "conf/grafana.ini.example")
       etc.install "conf/sample.ini" => "grafana/grafana.ini"
@@ -40,38 +39,7 @@ class Grafana < Formula
     (var/"lib/grafana/plugins").mkpath
   end
 
-  def env_script
-    <<-EOS.undent
-      #!/usr/bin/env bash
-      DAEMON=grafana-server
-      EXECUTABLE=#{bin/"grafana-server"}
-      CONFIG=#{etc}/grafana/grafana.ini
-      HOMEPATH=#{pkgshare}
-      LOGPATH=#{var}/log/grafana
-      DATAPATH=#{var}/lib/grafana
-      PLUGINPATH=#{var}/lib/grafana/plugins
-
-      case "$1" in
-      start)
-        $EXECUTABLE --config=$CONFIG --homepath=$HOMEPATH cfg:default.paths.logs=$LOGPATH cfg:default.paths.data=$DATAPATH cfg:default.paths.plugins=$PLUGINPATH 2> /dev/null &
-        [ $? -eq 0 ] && echo "$DAEMON started"
-      ;;
-      stop)
-        killall $DAEMON
-        [ $? -eq 0 ] && echo "$DAEMON stopped"
-      ;;
-      restart)
-        $0 stop
-        $0 start
-      ;;
-      *)
-        echo "Usage: $0 (start|stop|restart)"
-      ;;
-      esac
-    EOS
-  end
-
-  plist_options :manual => "grafana start"
+  plist_options :manual => "grafana-server --config=#{HOMEBREW_PREFIX}/etc/grafana/grafana.ini --homepath #{HOMEBREW_PREFIX}/share/grafana cfg:default.paths.logs=#{HOMEBREW_PREFIX}/var/log/grafana cfg:default.paths.data=#{HOMEBREW_PREFIX}/var/lib/grafana cfg:default.paths.plugins=#{HOMEBREW_PREFIX}/var/lib/grafana/plugins"
 
   def plist; <<-EOS.undent
     <?xml version="1.0" encoding="UTF-8"?>
