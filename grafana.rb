@@ -3,10 +3,19 @@ require "language/node"
 class Grafana < Formula
   desc "Gorgeous metric visualizations and dashboards for timeseries databases."
   homepage "http://grafana.org"
-  url "https://github.com/grafana/grafana/archive/v3.1.1.tar.gz"
-  sha256 "77bff57f02e507fb998d6d2492798801db4cb10c82c1378e32bd1dde963dba3d"
+  url "https://github.com/grafana/grafana/archive/v4.0.1.tar.gz"
+  sha256 "17a07d5912d928bf5f63e81b5d0f366063c4dc3e84705ace2003149a5357a3e5"
 
   head "https://github.com/grafana/grafana.git"
+
+  bottle do
+    cellar :any_skip_relocation
+    rebuild 1
+    sha256 "12ecd8800a3948b7f24160b78100a686c4fe9dbe1caa8e0e65280f75b6a7d9b7" => :sierra
+    sha256 "0a188a184ad09b6c6a5b66350d8563ef47c81cf360d807ec5b76006777d9d205" => :el_capitan
+    sha256 "426a722b7bdba4eb0f9004296c056df3aa06c27f4d58728f3985ede035aa5fff" => :yosemite
+    sha256 "96701f8bcc4ccbbcceb316084fe26ff7bd5ba9a478b5fb04fc8aadfa4361908e" => :mavericks
+  end
 
   depends_on "go" => :build
   depends_on "node" => :build
