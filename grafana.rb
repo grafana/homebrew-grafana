@@ -16,6 +16,7 @@ class Grafana < Formula
 
   depends_on "go" => :build
   depends_on "node" => :build
+  depends_on "yarn" => :build
 
   def install
     ENV["GOPATH"] = buildpath
@@ -24,8 +25,7 @@ class Grafana < Formula
 
     cd grafana_path do
       system "go", "run", "build.go", "build"
-      system "npm", "install", "yarn", *Language::Node.local_npm_install_args
-      system "node_modules/yarn/bin/yarn", "install"
+      system "yarn", "install"
       system "npm", "install", "grunt-cli", *Language::Node.local_npm_install_args
       system "node_modules/grunt-cli/bin/grunt", "build"
 
