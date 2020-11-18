@@ -2,16 +2,16 @@
 class Cortextool < Formula
   desc "Tools for interacting with Cortex"
   homepage "https://grafana.com"
-  version "0.4.2"
+  version "0.5.0"
   bottle :unneeded
 
   if OS.mac?
-    url "https://github.com/grafana/cortex-tools/releases/download/v0.4.2/cortextool_0.4.2_darwin_amd64.tar.gz"
-    sha256 "d85f4d3bf8d1d108ebde3162fec71f76db0a50a1d32d92ce81d9b1389a7e791d"
+    url "https://github.com/grafana/cortex-tools/releases/download/v0.5.0/cortextool_0.5.0_darwin_amd64.tar.gz"
+    sha256 "910412e659c0d7ef9cdc3691e934faf9290e2e455d43912910c024a941277a37"
   elsif OS.linux?
     if Hardware::CPU.intel?
-      url "https://github.com/grafana/cortex-tools/releases/download/v0.4.2/cortextool_0.4.2_linux_amd64.tar.gz"
-      sha256 "1003e840b8e3efbece3905a61625ae51ecbc110dfd5ba1f2601c7c12c92b554e"
+      url "https://github.com/grafana/cortex-tools/releases/download/v0.5.0/cortextool_0.5.0_linux_amd64.tar.gz"
+      sha256 "62592b7dd091b15e88e85bb237e41c01c86cae26c6223e341536437e0306a1b1"
     end
   end
 
