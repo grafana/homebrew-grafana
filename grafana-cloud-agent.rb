@@ -1,8 +1,8 @@
 class GrafanaCloudAgent < Formula
   desc "Lightweight subset of Prometheus and more, optimized for Grafana Cloud"
   homepage "https://grafana.com/products/cloud/"
-  url "https://github.com/grafana/agent/archive/v0.9.0.tar.gz"
-  sha256 "44d872044e0621a77e05f5608ba1bde68e39ddc2aaf0c1c64c53fa3cc7991aa1"
+  url "https://github.com/grafana/agent/archive/v0.13.0.tar.gz"
+  sha256 "94dcf9cba36bfc841226300ccaa8dc6677241c011acbefa00887fbd2d22de6d7"
   license "Apache-2.0"
 
   depends_on "go" => :build
