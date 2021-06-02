@@ -1,3 +1,6 @@
+# typed: false
+# frozen_string_literal: true
+
 class GrafanaCloudAgent < Formula
   desc "Lightweight subset of Prometheus and more, optimized for Grafana Cloud"
   homepage "https://grafana.com/products/cloud/"
