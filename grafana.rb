@@ -1,7 +1,10 @@
+# typed: false
+# frozen_string_literal: true
+
 require "language/node"
 
 class Grafana < Formula
-  desc "Gorgeous metric visualizations and dashboards for timeseries databases."
+  desc "Gorgeous metric visualizations and dashboards for timeseries databases"
   homepage "https://grafana.com"
   url "https://github.com/grafana/grafana/archive/v4.3.0.tar.gz"
   sha256 "d81e5fdb7ac702646a4b17343796970c91000ea5ea2036880e0e3e36c7a0a8a5"
@@ -9,10 +12,9 @@ class Grafana < Formula
   head "https://github.com/grafana/grafana.git"
 
   bottle do
-    cellar :any_skip_relocation
-    sha256 "7c7bcf3fa6db1c54dc94ab030ac0c8adc3d20761e695446ba13c1db98c6568d4" => :sierra
-    sha256 "96f30bf66355d985b23b39d2466f23e6a83455a4c9a1b9479eefaacc6415ef64" => :el_capitan
-    sha256 "41b6bca25925ab369383de74667e0b2ed5a79db8003ff3f3b82c73eeab5d047e" => :yosemite
+    sha256 cellar: :any_skip_relocation, sierra:     "7c7bcf3fa6db1c54dc94ab030ac0c8adc3d20761e695446ba13c1db98c6568d4"
+    sha256 cellar: :any_skip_relocation, el_capitan: "96f30bf66355d985b23b39d2466f23e6a83455a4c9a1b9479eefaacc6415ef64"
+    sha256 cellar: :any_skip_relocation, yosemite:   "41b6bca25925ab369383de74667e0b2ed5a79db8003ff3f3b82c73eeab5d047e"
   end
 
   depends_on "go" => :build
@@ -50,9 +52,10 @@ class Grafana < Formula
     (var/"lib/grafana/plugins").mkpath
   end
 
-  plist_options :manual => "grafana-server --config=#{HOMEBREW_PREFIX}/etc/grafana/grafana.ini --homepath #{HOMEBREW_PREFIX}/share/grafana cfg:default.paths.logs=#{HOMEBREW_PREFIX}/var/log/grafana cfg:default.paths.data=#{HOMEBREW_PREFIX}/var/lib/grafana cfg:default.paths.plugins=#{HOMEBREW_PREFIX}/var/lib/grafana/plugins"
+  plist_options manual: "grafana-server --config=#{HOMEBREW_PREFIX}/etc/grafana/grafana.ini --homepath #{HOMEBREW_PREFIX}/share/grafana cfg:default.paths.logs=#{HOMEBREW_PREFIX}/var/log/grafana cfg:default.paths.data=#{HOMEBREW_PREFIX}/var/lib/grafana cfg:default.paths.plugins=#{HOMEBREW_PREFIX}/var/lib/grafana/plugins"
 
-  def plist; <<-EOS.undent
+  def plist
+    <<-EOS.undent
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">
@@ -90,7 +93,7 @@ class Grafana < Formula
         </dict>
       </dict>
     </plist>
-   EOS
+    EOS
   end
 
   test do
@@ -111,7 +114,8 @@ class Grafana < Formula
     end
     Dir.chdir(pkgshare)
 
-    res = PTY.spawn(bin/"grafana-server", "cfg:default.paths.logs=#{logdir}", "cfg:default.paths.data=#{datadir}", "cfg:default.paths.plugins=#{plugdir}", "cfg:default.server.http_port=50100")
+    res = PTY.spawn(bin/"grafana-server", "cfg:default.paths.logs=#{logdir}", "cfg:default.paths.data=#{datadir}",
+                    "cfg:default.paths.plugins=#{plugdir}", "cfg:default.server.http_port=50100")
     r = res[0]
     w = res[1]
     pid = res[2]
@@ -119,7 +123,7 @@ class Grafana < Formula
     listening = Timeout.timeout(5) do
       li = false
       r.each do |l|
-        if l =~ /Initializing HTTP Server/
+        if /Initializing HTTP Server/.match?(l)
           li = true
           break
         end
