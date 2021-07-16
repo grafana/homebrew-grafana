@@ -1,9 +1,9 @@
 # typed: false
 # frozen_string_literal: true
 
-class GrafanaCloudAgent < Formula
-  desc "Lightweight subset of Prometheus and more, optimized for Grafana Cloud"
-  homepage "https://grafana.com/products/cloud/"
+class GrafanaAgent < Formula
+  desc "Prometheus Metrics, Loki Logs, and Tempo Traces, optimized for Grafana Cloud."
+  homepage "https://grafana.com/docs/agent/"
   url "https://github.com/grafana/agent/archive/v0.15.0.tar.gz"
   sha256 "6ffe4bbfa0efeecb7f352a965ff5d315915bd58a1800b7fb9d7e41fce50655d5"
   license "Apache-2.0"
@@ -15,17 +15,17 @@ class GrafanaCloudAgent < Formula
   end
 
   def post_install
-    (etc/"grafana-cloud-agent").mkpath
+    (etc/"grafana-agent").mkpath
   end
 
   def caveats
     <<~EOS
       The agent uses a configuration file that you must customize before running:
-        #{etc}/grafana-cloud-agent/config.yml
+        #{etc}/grafana-agent/config.yml
     EOS
   end
 
-  plist_options manual: "grafana-cloud-agent -config.file=#{HOMEBREW_PREFIX}/etc/grafana-cloud-agent.yml"
+  plist_options manual: "grafana-agent -config.file=#{HOMEBREW_PREFIX}/etc/grafana-agent.yml"
 
   def plist
     <<~EOS
@@ -37,18 +37,18 @@ class GrafanaCloudAgent < Formula
           <string>#{plist_name}</string>
           <key>ProgramArguments</key>
           <array>
-            <string>#{opt_bin}/grafana-cloud-agent</string>
+            <string>#{opt_bin}/grafana-agent</string>
             <string>-config.file</string>
-            <string>#{etc}/grafana-cloud-agent/config.yml</string>
+            <string>#{etc}/grafana-agent/config.yml</string>
           </array>
           <key>RunAtLoad</key>
           <true/>
           <key>KeepAlive</key>
           <false/>
           <key>StandardErrorPath</key>
-          <string>#{var}/log/grafana-cloud-agent.err.log</string>
+          <string>#{var}/log/grafana-agent.err.log</string>
           <key>StandardOutPath</key>
-          <string>#{var}/log/grafana-cloud-agent.log</string>
+          <string>#{var}/log/grafana-agent.log</string>
         </dict>
       </plist>
     EOS
@@ -57,7 +57,7 @@ class GrafanaCloudAgent < Formula
   test do
     port = free_port
 
-    (testpath/"grafana-cloud-agent.yml").write <<~EOS
+    (testpath/"grafana-agent.yml").write <<~EOS
       server:
         log_level: info
         http_listen_port: #{port}
@@ -65,7 +65,7 @@ class GrafanaCloudAgent < Formula
     EOS
 
     fork do
-      exec bin/"grafana-cloud-agent", "-config.file=#{testpath}/grafana-cloud-agent.yml"
+      exec bin/"grafana-agent", "-config.file=#{testpath}/grafana-agent.yml"
     end
     sleep 3
 
