@@ -25,7 +25,7 @@ class GrafanaAgent < Formula
     EOS
   end
 
-  plist_options manual: "grafana-agent -config.file=#{HOMEBREW_PREFIX}/etc/grafana-agent.yml"
+  plist_options manual: "grafana-agent -config.file=#{HOMEBREW_PREFIX}/etc/grafana-agent/config.yml"
 
   def plist
     <<~EOS
