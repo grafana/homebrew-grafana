@@ -5,20 +5,20 @@
 class Cortextool < Formula
   desc "Tools for interacting with Cortex"
   homepage "https://grafana.com"
-  version "0.10.6"
+  version "0.10.7"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/grafana/cortex-tools/releases/download/v0.10.6/cortextool_0.10.6_darwin_arm64.tar.gz"
-      sha256 "bf4bc532742c7fcfc674fab9e0997d1bb5f5ed0493d5ae4874684b9c573d9307"
+      url "https://github.com/grafana/cortex-tools/releases/download/v0.10.7/cortextool_0.10.7_darwin_arm64.tar.gz"
+      sha256 "5a1fd8bbb72aded3e9a00e59727ccec0e66477b3d197ec8f5299c37752a4e5df"
 
       def install
         bin.install "cortextool"
       end
     end
     if Hardware::CPU.intel?
-      url "https://github.com/grafana/cortex-tools/releases/download/v0.10.6/cortextool_0.10.6_darwin_amd64.tar.gz"
-      sha256 "a84f2b40f59a95cf5eb84fb4fbf32763d8150d5e8d17956604d44d3a99d61431"
+      url "https://github.com/grafana/cortex-tools/releases/download/v0.10.7/cortextool_0.10.7_darwin_amd64.tar.gz"
+      sha256 "b4f52472bebaafc3e7a06d38867e58820c0403ab174186af8cfa8d486728a6fe"
 
       def install
         bin.install "cortextool"
@@ -28,8 +28,8 @@ class Cortextool < Formula
 
   on_linux do
     if Hardware::CPU.intel?
-      url "https://github.com/grafana/cortex-tools/releases/download/v0.10.6/cortextool_0.10.6_linux_amd64.tar.gz"
-      sha256 "af27ba32fa3ea3ce33beae9441a405841568498762f8f19d1257ea3810699dc6"
+      url "https://github.com/grafana/cortex-tools/releases/download/v0.10.7/cortextool_0.10.7_linux_amd64.tar.gz"
+      sha256 "9978bf2923c562ffd8da30efcb9bf3a459af9609c9a234aab385aeb18fcf742e"
 
       def install
         bin.install "cortextool"
