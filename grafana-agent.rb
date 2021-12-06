@@ -4,8 +4,8 @@
 class GrafanaAgent < Formula
   desc "Prometheus Metrics, Loki Logs, and Tempo Traces, optimized for Grafana Cloud."
   homepage "https://grafana.com/docs/agent/"
-  url "https://github.com/grafana/agent/archive/v0.18.2.tar.gz"
-  sha256 "a3ba4dfb95a8898e9a2d003b571b9a0abe20514ab237e555785d482241e2159f"
+  url "https://github.com/grafana/agent/archive/v0.21.1.tar.gz"
+  sha256 "2079234f66a2a9e40c90bdbcf4c2ad60c2d7cdfd2fe3fe0a21b5adf7083e545d"
   license "Apache-2.0"
 
   depends_on "go" => :build
