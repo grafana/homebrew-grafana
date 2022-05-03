@@ -1,17 +1,17 @@
 class GrafanaAgent < Formula
   desc "Exporter for Prometheus Metrics, Loki Logs, and Tempo Traces"
   homepage "https://grafana.com/docs/agent/"
-  url "https://github.com/grafana/agent/archive/refs/tags/v0.24.1.tar.gz"
-  sha256 "7d75ee02ff43de4e31e206fc586dabcf032b8a68942766bad2535c3e3865bae9"
+  url "https://github.com/grafana/agent/archive/refs/tags/v0.24.2.tar.gz"
+  sha256 "c1657743ed2c3dd7dff1cc3a9777c5b7e950d163d6092cc5159b2198f555fff9"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "391170c491e47a14723843d2e6cc8196e7922c863e0ea4f2536b88a872e6e2e0"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "b133d50e590cd4154dde00e0b3e1d768e3014d568054794adc61b75deafb2623"
-    sha256 cellar: :any_skip_relocation, monterey:       "f00509727129a9bbf10f0a1332d72aae29c4d21c11967c96dd4ba9df931863c6"
-    sha256 cellar: :any_skip_relocation, big_sur:        "ddd9ecee764d0dabb7ba1571b7aabd604aa9131d9b8e26404687c2e6768b88a6"
-    sha256 cellar: :any_skip_relocation, catalina:       "ce5a40b124cde0f308799a972d31ed0308ba7f4b5a50e901a1b5bd0a704ec919"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "764157decfd3ee5a02240c4cf27788d36ae51754052b4a0c215b59df04e5cc8f"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "220606e85009806dc6d5c861e9b2ef938d9953d62397c3524c9ffba497f96d71"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "fcb27a88c14f65b4739186b2daf0c22eb5951cfba7871aa06b4471830eada621"
+    sha256 cellar: :any_skip_relocation, monterey:       "83b6502b2ec4b27f4f6f1178631c8df11ebfbe186b27dac1a05c6ebc7ec333b2"
+    sha256 cellar: :any_skip_relocation, big_sur:        "bde75a9fd54c11cf16a206ba8b3ad958437c0930cf806c5643b7e947b379531a"
+    sha256 cellar: :any_skip_relocation, catalina:       "927c87ee7cb57c84f916eb47a9b1fbda9cedd33c7826567015cdeb442459d1eb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "141e7dd49f9b4a99097b46b5f95e527c960be33646a9c0878c4b4828c9466d82"
   end
 
   depends_on "go" => :build
