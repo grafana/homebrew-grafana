@@ -9,19 +9,19 @@ class Mimirtool < Formula
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/grafana/mimir/releases/download/mimir-2.1.0/mimir-darwin-arm64"
-      sha256 "d08172197f748430eb9cb093cb493280fa60d655eed2784e2efe828ef37974d5"
+      url "https://github.com/grafana/mimir/releases/download/mimir-2.1.0/mimirtool-darwin-arm64"
+      sha256 "f1ae4a84a3ca0a0651c7d3f1c1dd9194c45de6ad154e985dc0782173852ced15"
 
       def install
-        bin.install "mimirtool"
+        bin.install "mimirtool-darwin-arm64" => "mimirtool"
       end
     end
     if Hardware::CPU.intel?
-      url "https://github.com/grafana/mimir/releases/download/mimir-2.1.0/mimir-darwin-amd64"
-      sha256 "18e863c278e68bfc379b2c492f70a451f1af00a6a2d821e8134ecc119e639c9b"
+      url "https://github.com/grafana/mimir/releases/download/mimir-2.1.0/mimirtool-darwin-amd64"
+      sha256 "13418684de6dd88e84679b2c1b1b581856a2a4da2ab92e4d895b4db62332b13d"
 
       def install
-        bin.install "mimirtool"
+        bin.install "mimir-darwin-amd64" => "mimirtool"
       end
     end
   end
@@ -32,7 +32,7 @@ class Mimirtool < Formula
       sha256 "44cd587702e017e6f2592dc5a77b3a8255122d0b46a01cb445db7074d59568a7"
 
       def install
-        bin.install "mimirtool"
+        bin.install "mimirtool-linux-amd64" => "mimirtool"
       end
     end
   end
