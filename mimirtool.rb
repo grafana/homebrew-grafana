@@ -4,6 +4,8 @@ class Mimirtool < Formula
   homepage "https://grafana.com"
   version "2.1.0"
 
+  deprecate! date: "2022-12-15", because: "is not maintained; use mimirtool formula from homebrew-core instead (brew uninstall grafana/grafana/mimirtool && brew install mimirtool)"
+
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/grafana/mimir/releases/download/mimir-2.1.0/mimirtool-darwin-arm64"
