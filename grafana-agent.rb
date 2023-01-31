@@ -27,8 +27,8 @@ class GrafanaAgent < Formula
       -X github.com/grafana/agent/pkg/build.BuildUser=#{tap.user}
       -X github.com/grafana/agent/pkg/build.BuildDate=#{time.rfc3339}
     ]
-    system "go", "build", *std_go_args(ldflags: ldflags.join(" ")), "./cmd/agent"
-    system "go", "build", *std_go_args(ldflags: ldflags.join(" ")), "-o", bin/"grafana-agentctl", "./cmd/agentctl"
+    system "go", "build", *std_go_args(ldflags: ldflags.join(" ")), "./cmd/grafana-agent"
+    system "go", "build", *std_go_args(ldflags: ldflags.join(" ")), "-o", bin/"grafana-agentctl", "./cmd/grafana-agentctl"
   end
 
   def post_install
