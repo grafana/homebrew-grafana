@@ -5,6 +5,8 @@ class GrafanaAgent < Formula
   sha256 "277e03290382a41ca139ec001f07beb1ffa04729df5b55bc09c42e696e6f6b70"
   license "Apache-2.0"
 
+  deprecate! date: "2023-01-08", because: "is not maintained; use grafana-agent formula from homebrew-core instead (brew uninstall grafana/grafana/grafana-agent && brew install grafana-agent)"
+
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_monterey: "0be2dd902955f68cd3d4e95d4b2c75ba30eaf9125d31facd0c7d141caf323121"
     sha256 cellar: :any_skip_relocation, arm64_big_sur:  "dd7cad2ece9e5817f9e048197e20b32a09f97eb81a4ff01f71146b9daa45a3de"
