@@ -1,8 +1,8 @@
 class GrafanaAgent < Formula
   desc "Exporter for Prometheus Metrics, Loki Logs, and Tempo Traces"
   homepage "https://grafana.com/docs/agent/"
-  url "https://github.com/grafana/agent/archive/refs/tags/v0.31.0.tar.gz"
-  sha256 "277e03290382a41ca139ec001f07beb1ffa04729df5b55bc09c42e696e6f6b70"
+  url "https://github.com/grafana/agent/archive/refs/tags/v0.32.0.tar.gz"
+  sha256 "af385fa66fe196fd793b35b9362611d3fdc4df0192f3f29b6a1e48bb6dbfaf43"
   license "Apache-2.0"
 
   deprecate! date: "2023-01-08", because: "is not maintained; use grafana-agent formula from homebrew-core instead (brew uninstall grafana/grafana/grafana-agent && brew install grafana-agent)"
