@@ -30,7 +30,7 @@ class GrafanaAgentFlow < Formula
       system "yarn", "run", "build"
     end
 
-    system "go", "build", *args, "-o", bin/"grafana-agent-flow", "./cmd/grafana-agent"
+    system "go", "build", *args, "-o", bin/"grafana-agent-flow", "./cmd/grafana-agent-flow"
   end
 
   def post_install
@@ -50,7 +50,6 @@ class GrafanaAgentFlow < Formula
       "--server.http.listen-addr=127.0.0.1:12345",
       "--storage.path=#{etc}/grafana-agent/data",
     ]
-    environment_variables AGENT_MODE: "flow"
     keep_alive true
     log_path var/"log/grafana-agent.log"
     error_log_path var/"log/grafana-agent.err.log"
