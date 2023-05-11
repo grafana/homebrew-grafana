@@ -46,9 +46,9 @@ class GrafanaAgentFlow < Formula
 
   service do
     run [
-      opt_bin/"grafana-agent-flow", "run", etc/"grafana-agent/config.river",
+      opt_bin/"grafana-agent-flow", "run", etc/"grafana-agent-flow/config.river",
       "--server.http.listen-addr=127.0.0.1:12345",
-      "--storage.path=#{etc}/grafana-agent/data",
+      "--storage.path=#{etc}/grafana-agent-flow/data",
     ]
     keep_alive true
     log_path var/"log/grafana-agent.log"
