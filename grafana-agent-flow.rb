@@ -4,6 +4,7 @@ class GrafanaAgentFlow < Formula
   url "https://github.com/grafana/agent/archive/refs/tags/v0.33.2.tar.gz"
   sha256 "6d5aa747104d4527417a2cebf7a78f46e07e6a095d02dc62d7ef3b644af516d3"
   license "Apache-2.0"
+  revision 1
 
   depends_on "go" => :build
   depends_on "node" => :build
@@ -31,15 +32,20 @@ class GrafanaAgentFlow < Formula
     end
 
     system "go", "build", *args, "-o", bin/"grafana-agent-flow", "./cmd/grafana-agent-flow"
-  end
 
-  def post_install
-    (etc/"grafana-agent-flow").mkpath
+    (buildpath/"config.river").write <<~EOS
+      logging {
+        level  = "info"
+        format = "logfmt"
+      }
+    EOS
+
+    (etc/"grafana-agent-flow").install "config.river"
   end
 
   def caveats
     <<~EOS
-      The agent uses a configuration file that you must customize before running:
+      The agent uses a configuration file that you can customize before running:
         #{etc}/grafana-agent-flow/config.river
     EOS
   end
@@ -51,8 +57,8 @@ class GrafanaAgentFlow < Formula
       "--storage.path=#{etc}/grafana-agent-flow/data",
     ]
     keep_alive true
-    log_path var/"log/grafana-agent.log"
-    error_log_path var/"log/grafana-agent.err.log"
+    log_path var/"log/grafana-agent-flow.log"
+    error_log_path var/"log/grafana-agent-flow.err.log"
   end
 
   test do
