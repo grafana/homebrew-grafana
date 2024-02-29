@@ -1,8 +1,8 @@
 class GrafanaAgentFlow < Formula
   desc "Vendor-neutral programmable observability pipelines."
   homepage "https://grafana.com/docs/agent/latest/flow"
-  url "https://github.com/grafana/agent/archive/refs/tags/v0.40.0.tar.gz"
-  sha256 "9b62645f0c1cbc62e1e0c4802f283fd201bb9a1f8c6da2cf9c244fe662a3c651"
+  url "https://github.com/grafana/agent/archive/refs/tags/v0.40.1.tar.gz"
+  sha256 "f97805d55bf0963fc63eed6e830ef240eb0b3f631809af242fca852466895449"
   license "Apache-2.0"
 
   depends_on "go" => :build
