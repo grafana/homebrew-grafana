@@ -5,33 +5,45 @@ class Alloy < Formula
     sha256 "422aa6ab7b9e606ebec2edcde79d6f26b6e648da85955fd1d5d08d6e33e7c537"
     license "Apache-2.0"
   
-    depends_on "go" => :build
-    depends_on "node" => :build
-    depends_on "yarn" => :build
-  
     on_linux do
       depends_on "systemd" => :build
     end
   
+    on_mac do
+      depends_on "go" => :build
+      depends_on "node" => :build
+      depends_on "yarn" => :build
+    end
+  
     def install
-      ldflags = %W[
-        -s -w
-        -X github.com/grafana/alloy/internal/build.Branch=HEAD
-        -X github.com/grafana/alloy/internal/build.Version=v#{version}
-        -X github.com/grafana/alloy/internal/build.BuildUser=#{tap.user}
-        -X github.com/grafana/alloy/internal/build.BuildDate=#{time.iso8601}
-      ]
-      args = std_go_args(ldflags: ldflags) + %w[-tags=builtinassets,noebpf]
-  
-      # Build the UI, which is baked into the final binary when the builtinassets
-      # tag is set.
-      cd "internal/web/ui" do
-        system "yarn"
-        system "yarn", "run", "build"
+      if OS.mac?
+        ldflags = %W[
+          -s -w
+          -X github.com/grafana/alloy/internal/build.Branch=HEAD
+          -X github.com/grafana/alloy/internal/build.Version=v#{version}
+          -X github.com/grafana/alloy/internal/build.BuildUser=#{tap.user}
+          -X github.com/grafana/alloy/internal/build.BuildDate=#{time.iso8601}
+        ]
+        args = std_go_args(ldflags: ldflags) + %w[-tags=builtinassets,noebpf]
+    
+        # Build the UI, which is baked into the final binary when the builtinassets
+        # tag is set.
+        cd "internal/web/ui" do
+          system "yarn"
+          system "yarn", "run", "build"
+        end
+        system "go", "build", *args, "-o", bin/"alloy", "."
+
+      else
+        # Reuse released binaries
+        resource("released-binary") do
+          url "https://github.com/grafana/alloy/releases/download/v#{version}/alloy-#{OS::NAME}-#{Hardware::CPU.arch}.zip"
+        end
+        resource("released-binary").stage do
+          bin.install "alloy-#{OS::NAME}-#{Hardware::CPU.arch}" => "alloy"
+        end
       end
-  
-      system "go", "build", *args, "-o", bin/"alloy", "."
-  
+
       (buildpath/"config.alloy").write <<~EOS
         logging {
           level  = "info"
