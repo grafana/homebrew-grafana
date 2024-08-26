@@ -4,8 +4,8 @@ class Alloy < Formula
     url "https://github.com/grafana/alloy/archive/refs/tags/v1.3.1.tar.gz"
     sha256 "a33f1440fd18639d19fe3d3dfa2b404ebd663656b8f9929fd60e8945b6ee0632"
     license "Apache-2.0"
-
-    depends_on "go" => :build
+  
+    depends_on "go@1.22" => :build
     depends_on "node" => :build
     depends_on "yarn" => :build
 
