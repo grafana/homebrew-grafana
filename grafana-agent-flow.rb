@@ -1,8 +1,8 @@
 class GrafanaAgentFlow < Formula
   desc "Vendor-neutral programmable observability pipelines."
   homepage "https://grafana.com/docs/agent/latest/flow"
-  url "https://github.com/grafana/agent/archive/refs/tags/v0.40.3.tar.gz"
-  sha256 "a3fd909f344e061f3afbda1ccbc928baa9bff63dbc172838bcb861719959e7c9"
+  url "https://github.com/grafana/agent/archive/refs/tags/v0.42.0.tar.gz"
+  sha256 "435e4e08ac416a5c9ff87f674b495b218e4adfffa2846799a5ec96053271a85a"
   license "Apache-2.0"
 
   depends_on "go" => :build
@@ -25,7 +25,7 @@ class GrafanaAgentFlow < Formula
 
     # Build the UI, which is baked into the final binary when the builtinassets
     # tag is set.
-    cd "web/ui" do
+    cd "internal/web/ui" do
       system "yarn"
       system "yarn", "run", "build"
     end
