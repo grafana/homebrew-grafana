@@ -5,7 +5,7 @@ class Alloy < Formula
     sha256 "422aa6ab7b9e606ebec2edcde79d6f26b6e648da85955fd1d5d08d6e33e7c537"
     license "Apache-2.0"
   
-    depends_on "go" => :build
+    depends_on "go@1.22" => :build
     depends_on "node" => :build
     depends_on "yarn" => :build
   
