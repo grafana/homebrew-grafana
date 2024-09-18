@@ -5,7 +5,7 @@ class GrafanaAgentFlow < Formula
   sha256 "56ef6a3f013aac5addc97c84301e27f6eeac2d3ee823c3ea0be6e21db35fb981"
   license "Apache-2.0"
 
-  depends_on "go" => :build
+  depends_on "go@1.22" => :build
   depends_on "node" => :build
   depends_on "yarn" => :build
 
