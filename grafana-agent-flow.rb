@@ -6,7 +6,7 @@ class GrafanaAgentFlow < Formula
   license "Apache-2.0"
 
   depends_on "go" => :build
-  depends_on "node" => :build
+  depends_on "node@20" => :build
   depends_on "yarn" => :build
 
   on_linux do
