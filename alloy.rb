@@ -5,7 +5,7 @@ class Alloy < Formula
     sha256 "fecbe8426ca9667e8957b6dff5d2572b37b2fdfbe946156875d35a7984af0ab4"
     license "Apache-2.0"
   
-    depends_on "go@1.22" => :build
+    depends_on "go@1.23" => :build
     depends_on "node@20" => :build
     depends_on "yarn" => :build
 
@@ -32,6 +32,7 @@ class Alloy < Formula
 
       system "go", "build", *args, "-o", bin/"alloy", "."
 
+      # Create a config.alloy file with default Alloy configuration
       (buildpath/"config.alloy").write <<~EOS
         logging {
           level  = "info"
@@ -40,22 +41,54 @@ class Alloy < Formula
       EOS
 
       (etc/"alloy").install "config.alloy"
+
+      # Create an empty config.env file for environment variables
+      (buildpath/"config.env").write ""
+      (etc/"alloy").install "config.env"
+
+      # Create an empty extra-args.txt file for extra command line arguments
+      (buildpath/"extra-args.txt").write ""
+      (etc/"alloy").install "extra-args.txt"
+
+      # Create a wrapper script to run Alloy using the config in config.alloy,
+      # env vars in config.env, and extra args in extra-args.txt
+      (buildpath/"alloy-wrapper").write <<~SH
+      #!/usr/bin/env sh
+      source "#{etc}/alloy/config.env"
+
+      COMMAND="#{opt_bin}/alloy run #{etc}/alloy/config.alloy \
+      --server.http.listen-addr=0.0.0.0:12345 \
+      --storage.path=#{var}/lib/alloy/data"
+
+      EXTRA_ARGS=$(cat "#{etc}/alloy/extra-args.txt")
+
+      if [ -z "$EXTRA_ARGS" ]; then
+        exec $COMMAND
+      else
+        exec $COMMAND $EXTRA_ARGS
+      fi
+      SH
+
+      bin.install "alloy-wrapper"
+      (bin/"alloy-wrapper").chmod 0755
+
       mkdir_p (var/"lib/alloy/data")
     end
 
     def caveats
       <<~EOS
-        Alloy uses a configuration file that you can customize before running:
-          #{etc}/alloy/config.alloy
+        Alloy uses a set of files that you can customize before running:
+          Configuration:
+            #{etc}/alloy/config.alloy
+          Environment variables:
+            #{etc}/alloy/config.env
+          Extra command line arguments:
+            #{etc}/alloy/extra-args.txt
       EOS
     end
 
     service do
-      run [
-        opt_bin/"alloy", "run", etc/"alloy/config.alloy",
-        "--server.http.listen-addr=127.0.0.1:12345",
-        "--storage.path=#{var}/lib/alloy/data",
-      ]
+      run ["#{opt_bin}/alloy-wrapper"]
       keep_alive true
       log_path var/"log/alloy.log"
       error_log_path var/"log/alloy.err.log"
