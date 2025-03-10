@@ -1,8 +1,8 @@
 class Alloy < Formula
     desc "Vendor-agnostic OpenTelemetry Collector distribution with programmable pipelines"
     homepage "https://grafana.com/docs/alloy/latest"
-    url "https://github.com/grafana/alloy/archive/refs/tags/v1.7.1.tar.gz"
-    sha256 "1fd5db699338d2c9bf3153098874a4e0cc26017eb0dae2fa3530e0393028d7e7"
+    url "https://github.com/grafana/alloy/archive/refs/tags/v1.7.2.tar.gz"
+    sha256 "1244ef1370dd99a276f42bcb43131bedd83d35557b16eb6e6223d40951353873"
     license "Apache-2.0"
   
     depends_on "go@1.23" => :build
