@@ -4,7 +4,7 @@ class Alloy < Formula
     url "https://github.com/grafana/alloy/archive/refs/tags/v1.10.1.tar.gz"
     # To get the sha256sum, run the following command, replacing the version number with the version you want to check:
     # wget https://github.com/grafana/alloy/archive/refs/tags/v1.10.1.tar.gz && sha256sum v1.10.1.tar.gz && rm v1.10.1.tar.gz
-    sha256 "e423591b855cce118b74fd7f03913f2871d16e6d9760c24e6d4e4bd6"
+    sha256 "e0e7f06441081491b70cb52598158d4204e17dcfbe4eb626272da63cea39c573"
     license "Apache-2.0"
   
     depends_on "go@1.24" => :build
