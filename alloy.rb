@@ -6,13 +6,19 @@ class Alloy < Formula
     # wget https://github.com/grafana/alloy/archive/refs/tags/v1.11.2.tar.gz && sha256sum v1.11.2.tar.gz && rm v1.11.2.tar.gz
     sha256 "e7965f6962ab2961a689b47223a20ccab6508205ff6aea3cc69001129ea1747c"
     license "Apache-2.0"
-  
+
     depends_on "go@1.24" => :build
     depends_on "node@20" => :build
     depends_on "yarn" => :build
 
     on_linux do
       depends_on "systemd" => :build
+    end
+
+    bottle do
+      root_url "https://github.com/grafana/homebrew-grafana/releases/download/alloy-1.11.2"
+      rebuild 1
+      sha256 cellar: :any_skip_relocation, arm64_tahoe: "c5f1e0762419fa840ae840458412dfcc20ad54a416faa0622f337b70723b35a7"
     end
 
     def install
