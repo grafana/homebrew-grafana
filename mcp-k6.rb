@@ -5,23 +5,23 @@
 class McpK6 < Formula
   desc "An experimental MCP (Model Context Protocol) server for k6"
   homepage "https://github.com/grafana/mcp-k6"
-  version "0.2.0"
+  version "0.3.0"
   license "AGPL-3.0"
 
   depends_on "k6"
   depends_on :macos
 
   if Hardware::CPU.intel?
-    url "https://github.com/grafana/mcp-k6/releases/download/v0.2.0/mcp-k6_0.2.0_darwin_amd64.tar.gz"
-    sha256 "d2dc1848fc4b598bb81006b58a7830dfac181d73f14dd16554347e2d4a429407"
+    url "https://github.com/grafana/mcp-k6/releases/download/v0.3.0/mcp-k6_0.3.0_darwin_amd64.tar.gz"
+    sha256 "83ddeadaa14503456d7fd4a7463715108a54582d0a1fa31722a65510688cd7ae"
 
     def install
       bin.install "mcp-k6"
     end
   end
   if Hardware::CPU.arm?
-    url "https://github.com/grafana/mcp-k6/releases/download/v0.2.0/mcp-k6_0.2.0_darwin_arm64.tar.gz"
-    sha256 "06d3d9e4964245d1c4e5cb3c8f8a75ae4263cc4d87922c1fac3cdab9c2377b73"
+    url "https://github.com/grafana/mcp-k6/releases/download/v0.3.0/mcp-k6_0.3.0_darwin_arm64.tar.gz"
+    sha256 "d87e4c6a783c9f6746591f633b01401140a5eba99c8b3c15c7075e7f74c815b0"
 
     def install
       bin.install "mcp-k6"
