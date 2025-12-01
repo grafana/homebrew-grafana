@@ -1,15 +1,14 @@
 class Alloy < Formula
     desc "Vendor-agnostic OpenTelemetry Collector distribution with programmable pipelines"
     homepage "https://grafana.com/docs/alloy/latest"
-    url "https://github.com/grafana/alloy/archive/refs/tags/v1.11.3.tar.gz"
+    url "https://github.com/grafana/alloy/archive/refs/tags/v1.12.0.tar.gz"
     # To get the sha256sum, run the following command, replacing the version number with the version you want to check:
-    # wget https://github.com/grafana/alloy/archive/refs/tags/v1.11.3.tar.gz && sha256sum v1.11.3.tar.gz && rm v1.11.3.tar.gz
-    sha256 "7655e363041181d003216b59d8ab67bb09fd2fa1a7c72c4a40b93f16c53db068"
+    # wget https://github.com/grafana/alloy/archive/refs/tags/v1.12.0.tar.gz && sha256sum v1.12.0.tar.gz && rm v1.12.0.tar.gz
+    sha256 "ace8f5d443b34ad02fe0263755c60edd61fb5da60e0e32ebd6397237f5b33957"
     license "Apache-2.0"
   
-    depends_on "go@1.24" => :build
-    depends_on "node@20" => :build
-    depends_on "yarn" => :build
+    depends_on "go@1.25" => :build
+    depends_on "node@24.4" => :build
 
     on_linux do
       depends_on "systemd" => :build
@@ -28,8 +27,8 @@ class Alloy < Formula
       # Build the UI, which is baked into the final binary when the builtinassets
       # tag is set.
       cd "internal/web/ui" do
-        system "yarn"
-        system "yarn", "run", "build"
+        system "npm", "install"
+        system "npm", "run", "build"
       end
 
       system "go", "build", *args, "-o", bin/"alloy", "."
