@@ -8,7 +8,7 @@ class Alloy < Formula
     license "Apache-2.0"
   
     depends_on "go@1.25" => :build
-    depends_on "node@24.4" => :build
+    depends_on "node@24" => :build
 
     on_linux do
       depends_on "systemd" => :build
