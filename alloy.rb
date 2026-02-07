@@ -31,7 +31,9 @@ class Alloy < Formula
         system "npm", "run", "build"
       end
 
-      system "go", "build", *args, "-o", bin/"alloy", "."
+      cd "collector" do
+        system "go", "build", *args, "-o", bin/"alloy", "."
+      end
 
       # Create a config.alloy file with default Alloy configuration
       (buildpath/"config.alloy").write <<~EOS
