@@ -5,25 +5,25 @@
 class McpK6 < Formula
   desc "An experimental MCP (Model Context Protocol) server for k6"
   homepage "https://github.com/grafana/mcp-k6"
-  version "0.4.0"
+  version "0.5.1"
   license "AGPL-3.0"
 
   depends_on "k6"
   depends_on :macos
 
   if Hardware::CPU.intel?
-    url "https://github.com/grafana/mcp-k6/releases/download/v0.4.0/mcp-k6_0.4.0_darwin_amd64.tar.gz"
-    sha256 "93b6639b5774e68ccf48f6c315f523bb97fdc9a32e14797b6b35a2de2f87331c"
+    url "https://github.com/grafana/mcp-k6/releases/download/v0.5.1/mcp-k6_0.5.1_darwin_amd64.tar.gz"
+    sha256 "7df53c720fb290db7944975fcbda10b48f15b17951759bfa644e5871abbe87c5"
 
-    def install
+    define_method(:install) do
       bin.install "mcp-k6"
     end
   end
   if Hardware::CPU.arm?
-    url "https://github.com/grafana/mcp-k6/releases/download/v0.4.0/mcp-k6_0.4.0_darwin_arm64.tar.gz"
-    sha256 "908007ba6d8eeff4cc2cc5c614ac98e91604254d292459843d093c8a7a91fa36"
+    url "https://github.com/grafana/mcp-k6/releases/download/v0.5.1/mcp-k6_0.5.1_darwin_arm64.tar.gz"
+    sha256 "94a1232ea505f552044c73543c35840da6bc3848d318dd70bcc5a52a226d0058"
 
-    def install
+    define_method(:install) do
       bin.install "mcp-k6"
     end
   end
