@@ -22,9 +22,9 @@ class Alloy < Formula
         -X github.com/grafana/alloy/internal/build.BuildUser=#{tap.user}
         -X github.com/grafana/alloy/internal/build.BuildDate=#{time.iso8601}
       ]
-      args = std_go_args(ldflags: ldflags) + %w[-tags=builtinassets,noebpf]
+      args = std_go_args(ldflags: ldflags) + %w[-tags=embedalloyui,noebpf]
 
-      # Build the UI, which is baked into the final binary when the builtinassets
+      # Build the UI, which is baked into the final binary when the embedalloyui
       # tag is set.
       cd "internal/web/ui" do
         system "npm", "install"
