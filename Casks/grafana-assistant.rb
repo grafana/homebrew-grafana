@@ -3,7 +3,7 @@ cask "grafana-assistant" do
   name "grafana-assistant"
   desc "AI assistant for Grafana Cloud"
   homepage "https://github.com/grafana/assistant-cli"
-  version "0.0.17"
+  version "0.0.21"
 
   livecheck do
     skip "Auto-generated on release."
@@ -14,22 +14,22 @@ cask "grafana-assistant" do
   on_macos do
     on_intel do
       url "https://github.com/grafana/assistant-cli/releases/download/v#{version}/grafana-assistant_#{version}_darwin_amd64.tar.gz"
-      sha256 "72be33f2ba0c03076379ffdd47e5aa47f5d29b1a6a6eb0a693b4f14a4af1fb9f"
+      sha256 "983c2064eac8bfb09f28aef852b62f425c112f93c6598c7e95e355646d6004c8"
     end
     on_arm do
       url "https://github.com/grafana/assistant-cli/releases/download/v#{version}/grafana-assistant_#{version}_darwin_arm64.tar.gz"
-      sha256 "541c8678b6856785e4689485c9fc3816b67184dd36cf7d191825a5bbbe34fbc6"
+      sha256 "0135bdbc83455b25fe40b24218bcc883d43b8311fc6662eb43f331f3789b742b"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/grafana/assistant-cli/releases/download/v#{version}/grafana-assistant_#{version}_linux_amd64.tar.gz"
-      sha256 "bf96746782b779f2fb1863011abdf71bacaee9442548739cd2ffbf10f3da18fc"
+      sha256 "d926ecf8f8a14f15ff6e95404cb0684db04c2a93cc1b0a9581bb52967612d2bf"
     end
     on_arm do
       url "https://github.com/grafana/assistant-cli/releases/download/v#{version}/grafana-assistant_#{version}_linux_arm64.tar.gz"
-      sha256 "99cf27f069da9db37608cf86da4467ccf33ba950ee02da1562948489bc235fa9"
+      sha256 "c3bd42f690a6a76208a6e3ffa8509e64ffa5863ee5c57a163981d7ebec706d84"
     end
   end
 
