@@ -1,10 +1,10 @@
 class Alloy < Formula
     desc "Vendor-agnostic OpenTelemetry Collector distribution with programmable pipelines"
     homepage "https://grafana.com/docs/alloy/latest"
-    url "https://github.com/grafana/alloy/archive/refs/tags/v1.16.1.tar.gz"
+    url "https://github.com/grafana/alloy/archive/refs/tags/v1.17.0.tar.gz"
     # To get the sha256sum, run the following command, replacing the version number with the version you want to check:
-    # wget https://github.com/grafana/alloy/archive/refs/tags/v1.16.1.tar.gz && sha256sum v1.16.1.tar.gz && rm v1.16.1.tar.gz
-    sha256 "a10d194733ea3eafde769dd0b9d17bf30603ce2f27d160611aaedba0186f364d"
+    # wget https://github.com/grafana/alloy/archive/refs/tags/v1.17.0.tar.gz && sha256sum v1.17.0.tar.gz && rm v1.17.0.tar.gz
+    sha256 "9662f0afe53257360cfaeeeeffeaf8ff43b5061ffb6c5dec114fc8be24f304d1"
     license "Apache-2.0"
   
     depends_on "go@1.26" => :build
