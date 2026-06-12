@@ -1,9 +1,9 @@
 class Sigil < Formula
-  desc "Hook binary for the Grafana AI Observability (Sigil) agent plugins"
+  desc "CLI for the Grafana AI Observability (Sigil) agent plugins"
   homepage "https://github.com/grafana/sigil-sdk/tree/main/plugins/sigil"
-  url "https://github.com/grafana/sigil-sdk/archive/refs/tags/plugins/sigil/v0.10.0.tar.gz"
-  version "0.10.0"
-  sha256 "a3dd6391eeff74ae35448e0035bfe5578676a6b058e1792d7b83501a7e4b0fa1"
+  url "https://github.com/grafana/sigil-sdk/archive/refs/tags/plugins/sigil/v0.12.0.tar.gz"
+  version "0.12.0"
+  sha256 "7bc1be66c6d406622991b8a399bf216f4b8ddeff5307e1ab06208eac76de11bd"
   license "Apache-2.0"
   head "https://github.com/grafana/sigil-sdk.git", branch: "main"
 
