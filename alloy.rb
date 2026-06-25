@@ -22,18 +22,20 @@ class Alloy < Formula
         -X github.com/grafana/alloy/internal/build.BuildUser=#{tap.user}
         -X github.com/grafana/alloy/internal/build.BuildDate=#{time.iso8601}
       ]
-      args = std_go_args(ldflags: ldflags) + %w[-tags=embedalloyui,noebpf]
+      # https://github.com/grafana/alloy/blob/main/tools/make/packaging.mk
+      tags = %w[netgo embedalloyui]
+      tags << "promtail_journal_enabled" if OS.linux?
 
       # Build the UI, which is baked into the final binary when the embedalloyui
       # tag is set.
       cd "internal/web/ui" do
-        system "npm", "install"
+        system "npm", "install", *std_npm_args(prefix: false)
         system "npm", "run", "build"
       end
 
-      cd "collector" do
-        system "go", "build", *args, "-o", bin/"alloy", "."
-      end
+      system "go", "build", "-C", "collector", *std_go_args(ldflags:, tags:, output: bin/"alloy")
+
+      generate_completions_from_executable(bin/"alloy", shell_parameter_format: :cobra)
 
       # Create a config.alloy file with default Alloy configuration
       (buildpath/"config.alloy").write <<~EOS
