@@ -23,7 +23,7 @@ class Alloy < Formula
         -X github.com/grafana/alloy/internal/build.BuildDate=#{time.iso8601}
       ]
       # https://github.com/grafana/alloy/blob/main/tools/make/packaging.mk
-      tags = %w[netgo embedalloyui]
+      tags = %w[netgo embedalloyui gore2regex]
       tags << "promtail_journal_enabled" if OS.linux?
 
       # Build the UI, which is baked into the final binary when the embedalloyui
