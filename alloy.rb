@@ -57,26 +57,17 @@ class Alloy < Formula
 
       # Create a wrapper script to run Alloy using the config in config.alloy,
       # env vars in config.env, and extra args in extra-args.txt
-      (buildpath/"alloy-wrapper").write <<~SH
-      #!/usr/bin/env sh
-      source "#{etc}/alloy/config.env"
-
-      COMMAND="#{opt_bin}/alloy run #{etc}/alloy/config.alloy \
-      --server.http.listen-addr=0.0.0.0:12345 \
-      --storage.path=#{var}/lib/alloy/data"
-
-      EXTRA_ARGS=$(cat "#{etc}/alloy/extra-args.txt")
-
-      if [ -z "$EXTRA_ARGS" ]; then
-        exec $COMMAND
-      else
-        exec $COMMAND $EXTRA_ARGS
-      fi
-      SH
+      system "go", "run",
+        "-C", "packaging/homebrew/service-wrapper-gen", ".",
+        "-alloy-bin", "#{opt_bin}/alloy",
+        "-config-path", "#{etc}/alloy/",
+        "-env-file", "#{etc}/alloy/config.env",
+        "-extra-args-file", "#{etc}/alloy/extra-args.txt",
+        "-otel-extra-args-file", "#{etc}/alloy/otel-extra-args.txt",
+        "-storage-path", "#{var}/lib/alloy/data",
+        "-out", "#{buildpath}/alloy-wrapper"
 
       bin.install "alloy-wrapper"
-      (bin/"alloy-wrapper").chmod 0755
-
       mkdir_p (var/"lib/alloy/data")
     end
 
