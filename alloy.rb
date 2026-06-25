@@ -45,25 +45,25 @@ class Alloy < Formula
         }
       EOS
 
-      (etc/"alloy").install "config.alloy"
+      pkgetc.install "config.alloy"
 
       # Create an empty config.env file for environment variables
       (buildpath/"config.env").write ""
-      (etc/"alloy").install "config.env"
+      pkgetc.install "config.env"
 
       # Create an empty extra-args.txt file for extra command line arguments
       (buildpath/"extra-args.txt").write ""
-      (etc/"alloy").install "extra-args.txt"
+      pkgetc.install "extra-args.txt"
 
       # Create a wrapper script to run Alloy using the config in config.alloy,
       # env vars in config.env, and extra args in extra-args.txt
       system "go", "run",
         "-C", "packaging/homebrew/service-wrapper-gen", ".",
         "-alloy-bin", "#{opt_bin}/alloy",
-        "-config-path", "#{etc}/alloy",
-        "-env-file", "#{etc}/alloy/config.env",
-        "-extra-args-file", "#{etc}/alloy/extra-args.txt",
-        "-otel-extra-args-file", "#{etc}/alloy/otel-extra-args.txt",
+        "-config-path", "#{pkgetc}",
+        "-env-file", "#{pkgetc}/config.env",
+        "-extra-args-file", "#{pkgetc}/extra-args.txt",
+        "-otel-extra-args-file", "#{pkgetc}/otel-extra-args.txt",
         "-storage-path", "#{var}/lib/alloy/data",
         "-out", "#{buildpath}/alloy-wrapper"
 
@@ -75,16 +75,16 @@ class Alloy < Formula
       <<~EOS
         Alloy uses a set of files that you can customize before running:
           Configuration:
-            #{etc}/alloy/config.alloy
+            #{pkgetc}/config.alloy
           Environment variables:
-            #{etc}/alloy/config.env
+            #{pkgetc}/config.env
           Extra command line arguments:
-            #{etc}/alloy/extra-args.txt
+            #{pkgetc}/extra-args.txt
 
         To enable the OTel Engine:
-          - Set "ALLOY_OTEL_MODE=1" in #{etc}/alloy/config.env
-          - Create collector config in #{etc}/alloy/config.yaml
-          - If necessary, create #{etc}/alloy/otel-extra-args.txt to add command line arguments.
+          - Set "ALLOY_OTEL_MODE=1" in #{pkgetc}/config.env
+          - Create collector config in #{pkgetc}/config.yaml
+          - If necessary, create #{pkgetc}/otel-extra-args.txt to add command line arguments.
       EOS
     end
 
