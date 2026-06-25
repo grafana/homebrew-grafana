@@ -89,6 +89,11 @@ class Alloy < Formula
             #{etc}/alloy/config.env
           Extra command line arguments:
             #{etc}/alloy/extra-args.txt
+
+        To enable the OTel Engine:
+          - Set "ALLOY_OTEL_MODE=1" in #{etc}/alloy/config.env
+          - Create collector config in #{etc}/alloy/config.yaml
+          - If necessary, create #{etc}/alloy/otel-extra-args.txt to add command line arguments.
       EOS
     end
 
