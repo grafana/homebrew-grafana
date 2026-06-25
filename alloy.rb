@@ -60,7 +60,7 @@ class Alloy < Formula
       system "go", "run",
         "-C", "packaging/homebrew/service-wrapper-gen", ".",
         "-alloy-bin", "#{opt_bin}/alloy",
-        "-config-path", "#{etc}/alloy/",
+        "-config-path", "#{etc}/alloy",
         "-env-file", "#{etc}/alloy/config.env",
         "-extra-args-file", "#{etc}/alloy/extra-args.txt",
         "-otel-extra-args-file", "#{etc}/alloy/otel-extra-args.txt",
