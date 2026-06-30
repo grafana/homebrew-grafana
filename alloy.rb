@@ -1,10 +1,10 @@
 class Alloy < Formula
     desc "Vendor-agnostic OpenTelemetry Collector distribution with programmable pipelines"
     homepage "https://grafana.com/docs/alloy/latest"
-    url "https://github.com/grafana/alloy/archive/refs/tags/v1.17.0.tar.gz"
+    url "https://github.com/grafana/alloy/archive/refs/tags/v1.17.1.tar.gz"
     # To get the sha256sum, run the following command, replacing the version number with the version you want to check:
-    # wget https://github.com/grafana/alloy/archive/refs/tags/v1.17.0.tar.gz && sha256sum v1.17.0.tar.gz && rm v1.17.0.tar.gz
-    sha256 "9662f0afe53257360cfaeeeeffeaf8ff43b5061ffb6c5dec114fc8be24f304d1"
+    # wget https://github.com/grafana/alloy/archive/refs/tags/v1.17.1.tar.gz && sha256sum v1.17.1.tar.gz && rm v1.17.0.tar.gz
+    sha256 "a3072c30a70901764bb31f26c7fa126cf1f625ac5c34e7cd407fcefad8c8f461"
     license "Apache-2.0"
   
     depends_on "go@1.26" => :build
@@ -23,7 +23,7 @@ class Alloy < Formula
         -X github.com/grafana/alloy/internal/build.BuildDate=#{time.iso8601}
       ]
       # https://github.com/grafana/alloy/blob/main/tools/make/packaging.mk
-      tags = %w[netgo embedalloyui]
+      tags = %w[netgo embedalloyui gore2regex]
       tags << "promtail_journal_enabled" if OS.linux?
 
       # Build the UI, which is baked into the final binary when the embedalloyui
@@ -45,38 +45,29 @@ class Alloy < Formula
         }
       EOS
 
-      (etc/"alloy").install "config.alloy"
+      pkgetc.install "config.alloy"
 
       # Create an empty config.env file for environment variables
       (buildpath/"config.env").write ""
-      (etc/"alloy").install "config.env"
+      pkgetc.install "config.env"
 
       # Create an empty extra-args.txt file for extra command line arguments
       (buildpath/"extra-args.txt").write ""
-      (etc/"alloy").install "extra-args.txt"
+      pkgetc.install "extra-args.txt"
 
       # Create a wrapper script to run Alloy using the config in config.alloy,
       # env vars in config.env, and extra args in extra-args.txt
-      (buildpath/"alloy-wrapper").write <<~SH
-      #!/usr/bin/env sh
-      source "#{etc}/alloy/config.env"
-
-      COMMAND="#{opt_bin}/alloy run #{etc}/alloy/config.alloy \
-      --server.http.listen-addr=0.0.0.0:12345 \
-      --storage.path=#{var}/lib/alloy/data"
-
-      EXTRA_ARGS=$(cat "#{etc}/alloy/extra-args.txt")
-
-      if [ -z "$EXTRA_ARGS" ]; then
-        exec $COMMAND
-      else
-        exec $COMMAND $EXTRA_ARGS
-      fi
-      SH
+      system "go", "run",
+        "-C", "packaging/homebrew/service-wrapper-gen", ".",
+        "-alloy-bin", "#{opt_bin}/alloy",
+        "-config-path", "#{pkgetc}",
+        "-env-file", "#{pkgetc}/config.env",
+        "-extra-args-file", "#{pkgetc}/extra-args.txt",
+        "-otel-extra-args-file", "#{pkgetc}/otel-extra-args.txt",
+        "-storage-path", "#{var}/lib/alloy/data",
+        "-out", "#{buildpath}/alloy-wrapper"
 
       bin.install "alloy-wrapper"
-      (bin/"alloy-wrapper").chmod 0755
-
       mkdir_p (var/"lib/alloy/data")
     end
 
@@ -84,11 +75,16 @@ class Alloy < Formula
       <<~EOS
         Alloy uses a set of files that you can customize before running:
           Configuration:
-            #{etc}/alloy/config.alloy
+            #{pkgetc}/config.alloy
           Environment variables:
-            #{etc}/alloy/config.env
+            #{pkgetc}/config.env
           Extra command line arguments:
-            #{etc}/alloy/extra-args.txt
+            #{pkgetc}/extra-args.txt
+
+        To enable the OTel Engine:
+          - Set "ALLOY_OTEL_MODE=1" in #{pkgetc}/config.env
+          - Create collector config in #{pkgetc}/config.yaml
+          - If necessary, create #{pkgetc}/otel-extra-args.txt to add command line arguments.
       EOS
     end
 
