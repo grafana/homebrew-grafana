@@ -1,3 +1,4 @@
 {
-  "grafana-cloud-agent": "grafana-agent"
+  "grafana-cloud-agent": "grafana-agent",
+  "sigil": "agento11y"
 }
