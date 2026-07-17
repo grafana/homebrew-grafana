@@ -1,11 +1,10 @@
 class Agento11y < Formula
   desc "CLI for the Grafana AI Observability (Sigil) agent plugins"
   homepage "https://github.com/grafana/sigil-sdk/tree/main/plugins/sigil"
-  url "https://github.com/grafana/sigil-sdk/archive/refs/tags/plugins/sigil/v0.18.0.tar.gz"
-  version "0.18.0"
-  sha256 "5a0032312312f23955ddbace70623c9c148b509198cbf3aed28d9ff8acac048e"
+  url "https://github.com/grafana/sigil-sdk/archive/refs/tags/plugins/sigil/v0.19.0.tar.gz"
+  version "0.19.0"
+  sha256 "9cb3150c1fd0881d72e47c3321d26a908a6e29f7340c83e61b9d608484087178"
   license "Apache-2.0"
-  revision 1
   head "https://github.com/grafana/sigil-sdk.git", branch: "main"
 
   depends_on "go" => :build
@@ -26,7 +25,7 @@ class Agento11y < Formula
       system "go", "build",
         "-buildvcs=false",
         *std_go_args(ldflags: ldflags, output: bin/"agento11y"),
-        "./cmd/sigil"
+        "./cmd/agento11y"
     end
 
     bin.install_symlink "agento11y" => "sigil"
