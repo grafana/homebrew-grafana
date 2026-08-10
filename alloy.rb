@@ -3,39 +3,33 @@
 class Alloy < Formula
   desc "Vendor-agnostic OpenTelemetry Collector distribution with programmable pipelines"
   homepage "https://grafana.com/docs/alloy/latest"
-  # Explicit version: the release zips carry no version in their filename, and
-  # Homebrew would otherwise misparse it (e.g. "64" from "amd64").
-  version "1.18.0"
+  version "1.18.1"
   license "Apache-2.0"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/grafana/alloy/releases/download/v1.18.0/alloy-darwin-arm64.zip"
-      sha256 "1c1ce2f7b0b94df9046077de0363d1b0b620cd4e43b129897607c787713fe53e"
+      url "https://github.com/grafana/alloy/releases/download/v1.18.1/alloy-darwin-arm64.zip"
+      sha256 "29bb1342eb2313a1bfeb486aeea25583d828da34b60d29c8583fc6a99544e3c2"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/grafana/alloy/releases/download/v1.18.0/alloy-darwin-amd64.zip"
-      sha256 "c92a075012e9e1485c03a9edab84d227987357893fb01f379ff3d38277f2b042"
+      url "https://github.com/grafana/alloy/releases/download/v1.18.1/alloy-darwin-amd64.zip"
+      sha256 "7baf34a99554c252c463c348d9a46ed66a7cd54111569119087b224b012ea541"
     end
   end
 
   on_linux do
     if Hardware::CPU.intel?
-      url "https://github.com/grafana/alloy/releases/download/v1.18.0/alloy-linux-amd64.zip"
-      sha256 "92f4c950aec4ec16a7fdbf6f805be4334d4d5fbbe458eecf514319c1c491bef4"
+      url "https://github.com/grafana/alloy/releases/download/v1.18.1/alloy-linux-amd64.zip"
+      sha256 "fac853cbc3983a50a2368f9a685b31f74392ae86dd6155461b11a911c07b483c"
     end
 
     if Hardware::CPU.arm?
-      url "https://github.com/grafana/alloy/releases/download/v1.18.0/alloy-linux-arm64.zip"
-      sha256 "e20f8570628818a15192d34372839017a4c446269b5d96036ad976ebf7a7728a"
+      url "https://github.com/grafana/alloy/releases/download/v1.18.1/alloy-linux-arm64.zip"
+      sha256 "499446cfe22514d6c9f00af953d98162526ea818e84c4e452f8fddbbfa8676d6"
     end
   end
 
-  # Extra install steps from alloy.rb.original. Compilation steps removed.
   def install
-    # The release zip contains a single binary named alloy-<os>-<arch>, which
-    # Homebrew auto-extracts. Its executable bit is not preserved in the zip, so
-    # restore it after install.
     os = OS.mac? ? "darwin" : "linux"
     arch = Hardware::CPU.arm? ? "arm64" : "amd64"
     bin.install "alloy-#{os}-#{arch}" => "alloy"
