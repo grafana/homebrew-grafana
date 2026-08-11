@@ -17,6 +17,8 @@ class Grafana < Formula
     sha256 cellar: :any_skip_relocation, yosemite:   "41b6bca25925ab369383de74667e0b2ed5a79db8003ff3f3b82c73eeab5d047e"
   end
 
+  deprecate! date: "2021-06-28", because: "is not maintained; use grafana formula from homebrew-core instead (brew uninstall grafana/grafana/grafana && brew install grafana)"
+
   depends_on "go" => :build
   depends_on "node" => :build
   depends_on "yarn" => :build
@@ -52,48 +54,21 @@ class Grafana < Formula
     (var/"lib/grafana/plugins").mkpath
   end
 
-  plist_options manual: "grafana-server --config=#{HOMEBREW_PREFIX}/etc/grafana/grafana.ini --homepath #{HOMEBREW_PREFIX}/share/grafana cfg:default.paths.logs=#{HOMEBREW_PREFIX}/var/log/grafana cfg:default.paths.data=#{HOMEBREW_PREFIX}/var/lib/grafana cfg:default.paths.plugins=#{HOMEBREW_PREFIX}/var/lib/grafana/plugins"
-
-  def plist
-    <<-EOS.undent
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-    <plist version="1.0">
-      <dict>
-        <key>KeepAlive</key>
-        <dict>
-          <key>SuccessfulExit</key>
-          <false/>
-        </dict>
-        <key>Label</key>
-        <string>#{plist_name}</string>
-        <key>ProgramArguments</key>
-        <array>
-          <string>#{opt_bin}/grafana-server</string>
-          <string>--config</string>
-          <string>#{etc}/grafana/grafana.ini</string>
-          <string>--homepath</string>
-          <string>#{opt_pkgshare}</string>
-          <string>cfg:default.paths.logs=#{var}/log/grafana</string>
-          <string>cfg:default.paths.data=#{var}/lib/grafana</string>
-          <string>cfg:default.paths.plugins=#{var}/lib/grafana/plugins</string>
-        </array>
-        <key>RunAtLoad</key>
-        <true/>
-        <key>WorkingDirectory</key>
-        <string>#{var}/lib/grafana</string>
-        <key>StandardErrorPath</key>
-        <string>#{var}/log/grafana/grafana-stderr.log</string>
-        <key>StandardOutPath</key>
-        <string>#{var}/log/grafana/grafana-stdout.log</string>
-        <key>SoftResourceLimits</key>
-        <dict>
-          <key>NumberOfFiles</key>
-          <integer>10240</integer>
-        </dict>
-      </dict>
-    </plist>
-    EOS
+  service do
+    run [
+      opt_bin/"grafana-server",
+      "--config",
+      etc/"grafana/grafana.ini",
+      "--homepath",
+      opt_pkgshare,
+      "cfg:default.paths.logs=#{var}/log/grafana",
+      "cfg:default.paths.data=#{var}/lib/grafana",
+      "cfg:default.paths.plugins=#{var}/lib/grafana/plugins",
+    ]
+    keep_alive successful_exit: false
+    working_dir var/"lib/grafana"
+    log_path var/"log/grafana/grafana-stdout.log"
+    error_log_path var/"log/grafana/grafana-stderr.log"
   end
 
   test do
