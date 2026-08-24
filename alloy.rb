@@ -3,29 +3,29 @@
 class Alloy < Formula
   desc "Vendor-agnostic OpenTelemetry Collector distribution with programmable pipelines"
   homepage "https://grafana.com/docs/alloy/latest"
-  version "1.18.1"
+  version "1.19.0"
   license "Apache-2.0"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/grafana/alloy/releases/download/v1.18.1/alloy-darwin-arm64.zip"
-      sha256 "29bb1342eb2313a1bfeb486aeea25583d828da34b60d29c8583fc6a99544e3c2"
+      url "https://github.com/grafana/alloy/releases/download/v1.19.0/alloy-darwin-arm64.zip"
+      sha256 "0306687fbeeea016818456ecb7d1e474b5514cb115925add5a1520c28edbf8b9"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/grafana/alloy/releases/download/v1.18.1/alloy-darwin-amd64.zip"
-      sha256 "7baf34a99554c252c463c348d9a46ed66a7cd54111569119087b224b012ea541"
+      url "https://github.com/grafana/alloy/releases/download/v1.19.0/alloy-darwin-amd64.zip"
+      sha256 "93c8b144ddaf843c1e531134a6ccdcd3b3a0b1d1cec67f6df6301359697009e9"
     end
   end
 
   on_linux do
     if Hardware::CPU.intel?
-      url "https://github.com/grafana/alloy/releases/download/v1.18.1/alloy-linux-amd64.zip"
-      sha256 "fac853cbc3983a50a2368f9a685b31f74392ae86dd6155461b11a911c07b483c"
+      url "https://github.com/grafana/alloy/releases/download/v1.19.0/alloy-linux-amd64.zip"
+      sha256 "fa724f5f6b4be056dd79c3b728a6fa64203f83f383929712ac09842cf10ee37d"
     end
 
     if Hardware::CPU.arm?
-      url "https://github.com/grafana/alloy/releases/download/v1.18.1/alloy-linux-arm64.zip"
-      sha256 "499446cfe22514d6c9f00af953d98162526ea818e84c4e452f8fddbbfa8676d6"
+      url "https://github.com/grafana/alloy/releases/download/v1.19.0/alloy-linux-arm64.zip"
+      sha256 "e0a6914c40f057a9415804c50fa9ec160b635ef94bd051f9868be1fbbccd35ec"
     end
   end
 
