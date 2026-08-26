@@ -1,9 +1,9 @@
 class Agento11y < Formula
   desc "CLI for the Grafana Agent Observability plugins"
   homepage "https://github.com/grafana/agento11y/tree/main/plugins/agento11y"
-  url "https://github.com/grafana/agento11y/archive/refs/tags/plugins/agento11y/v0.38.0.tar.gz"
-  version "0.38.0"
-  sha256 "b0a918e64963a73a5409d0749c4d58b5c403e121fdee1cf51e1955e2c22ae337"
+  url "https://github.com/grafana/agento11y/archive/refs/tags/plugins/agento11y/v0.39.0.tar.gz"
+  version "0.39.0"
+  sha256 "a3fd4488168843c54cd69e63bfbc3f0aa308b09178ac47a19e0d0f28c53c1677"
   license "Apache-2.0"
   head "https://github.com/grafana/agento11y.git", branch: "main"
 
