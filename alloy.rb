@@ -3,29 +3,29 @@
 class Alloy < Formula
   desc "Vendor-agnostic OpenTelemetry Collector distribution with programmable pipelines"
   homepage "https://grafana.com/docs/alloy/latest"
-  version "1.19.0"
+  version "1.20.0"
   license "Apache-2.0"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/grafana/alloy/releases/download/v1.19.0/alloy-darwin-arm64.zip"
-      sha256 "0306687fbeeea016818456ecb7d1e474b5514cb115925add5a1520c28edbf8b9"
+      url "https://github.com/grafana/alloy/releases/download/v1.20.0/alloy-darwin-arm64.zip"
+      sha256 "c55dbc535ede22e680e8389a3ed74337ad70a5fb4da90382649bbc16b1e6a012"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/grafana/alloy/releases/download/v1.19.0/alloy-darwin-amd64.zip"
-      sha256 "93c8b144ddaf843c1e531134a6ccdcd3b3a0b1d1cec67f6df6301359697009e9"
+      url "https://github.com/grafana/alloy/releases/download/v1.20.0/alloy-darwin-amd64.zip"
+      sha256 "b3c8e8a6b5e044a7e49d8fc54e559884f193f165434d2d04a381cafe12bfcff0"
     end
   end
 
   on_linux do
     if Hardware::CPU.intel?
-      url "https://github.com/grafana/alloy/releases/download/v1.19.0/alloy-linux-amd64.zip"
-      sha256 "fa724f5f6b4be056dd79c3b728a6fa64203f83f383929712ac09842cf10ee37d"
+      url "https://github.com/grafana/alloy/releases/download/v1.20.0/alloy-linux-amd64.zip"
+      sha256 "5b3c5c71e682e17562d224b1841c3126dda71dbd4d049b3123f300de46215e65"
     end
 
     if Hardware::CPU.arm?
-      url "https://github.com/grafana/alloy/releases/download/v1.19.0/alloy-linux-arm64.zip"
-      sha256 "e0a6914c40f057a9415804c50fa9ec160b635ef94bd051f9868be1fbbccd35ec"
+      url "https://github.com/grafana/alloy/releases/download/v1.20.0/alloy-linux-arm64.zip"
+      sha256 "55d90c15c0cd841756380cfcef7e5a5ca46353214c119672f43a5d13fc7b9d6b"
     end
   end
 
@@ -66,7 +66,7 @@ class Alloy < Formula
       fi
 
       otel_mode=""
-      case "${ALLOY_OTEL_MODE:-}" in
+      case "$(printf '%s' "${ALLOY_OTEL_MODE:-}" | tr '[:upper:]' '[:lower:]')" in
         1 | true | yes | on ) otel_mode="1" ;;
       esac
 
